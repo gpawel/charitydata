@@ -1,4 +1,4 @@
-package org.qamation.charities.parser;
+package org.qamation.charities.extractor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CharityLinkParser {
+public class CharityLinkExtractor {
     private static final String CHARITY_LINK_XPATH ="//*/a[@class='title lnk']";
     private static final String LINK_ATTRIBUTE_NAME = "href";
     private static By xpath = By.xpath(CHARITY_LINK_XPATH);
