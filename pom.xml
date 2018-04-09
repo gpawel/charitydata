@@ -7,6 +7,13 @@
     <groupId>org.qamation</groupId>
     <artifactId>charity-data</artifactId>
     <version>1.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.qamation</groupId>
+            <artifactId>web-page</artifactId>
+            <version>LATEST</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
