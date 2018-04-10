@@ -38,6 +38,8 @@ public class FinInfoExtractor {
     }
 
 
+
+
     private  String[] getElementsContent(List<WebElement> els) {
         if (els.size()==0) return new String[] {};
         String[] result = new String[els.size()];
