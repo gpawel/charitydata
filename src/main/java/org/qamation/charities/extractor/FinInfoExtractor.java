@@ -11,6 +11,7 @@ public class FinInfoExtractor {
     private static final String FIN_INFO_ELEMENT_XPATH = "//div[@id='stats']";
     private static final String SUMMARY_ELEMENT_XPATH = FIN_INFO_ELEMENT_XPATH+"/table[2]";
     private static final String SUMMARY_YEARS_XPATH = SUMMARY_ELEMENT_XPATH+"/thead/tr/th";
+    private static final String REVENUES_YEAR_XPATH = "//*[contains(text(),'Total revenue')]/../../td";
 
     private WebDriver driver;
 
@@ -30,7 +31,12 @@ public class FinInfoExtractor {
         return getElementsContent(els);
     }
 
-    public String[] get
+    public String [] getRevenuePerYear() {
+        By xpath = By.xpath(REVENUES_YEAR_XPATH);
+        List<WebElement> els = driver.findElements(xpath);
+        return getElementsContent(els);
+    }
+
 
     private  String[] getElementsContent(List<WebElement> els) {
         if (els.size()==0) return new String[] {};

@@ -1,6 +1,6 @@
 package org.qamation.charities.extractor;
 
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,9 +19,9 @@ public class FinInfoExtractorTests extends BaseTest {
         page.openPage("https://charityintelligence.ca/charity-details/154-acclaim-health");
         page.isReady();
         String[] data = extractor.getYears();
-        Assert.assertEquals("2016",data[0]);
-        Assert.assertEquals("2015",data[1]);
-        Assert.assertEquals("2014",data[2]);
+        assertEquals("2016",data[0]);
+        assertEquals("2015",data[1]);
+        assertEquals("2014",data[2]);
     }
 
     @Test
@@ -29,8 +29,33 @@ public class FinInfoExtractorTests extends BaseTest {
         page.openPage("https://charityintelligence.ca/charity-details/772-blue-sea-philanthropy");
         page.isReady();
         String[] data = extractor.getYears();
-        Assert.assertEquals("2015",data[0]);
-        Assert.assertEquals("2014",data[1]);
-        Assert.assertEquals("2013",data[2]);
+        assertEquals("2015",data[0]);
+        assertEquals("2014",data[1]);
+        assertEquals("2013",data[2]);
+    }
+
+    @Test
+    public void extractRevenueTest1() {
+        page.openPage("https://charityintelligence.ca/charity-details/154-acclaim-health");
+        page.isReady();
+        String[] revenues = extractor.getRevenuePerYear();
+        assertEquals("Total revenues",revenues[0]);
+        assertEquals("18,854",revenues[1]);
+        assertEquals("18,704",revenues[2]);
+        assertEquals("17,084",revenues[3]);
+        assertEquals(17084, Integer.parseInt(revenues[3].replaceAll(",","")));
+    }
+
+    @Test
+    public void extactRevenueTest2() {
+        //https://charityintelligence.ca/charity-details/629-ecotecture-centre-for-ecological-art-architecture
+        page.openPage("https://charityintelligence.ca/charity-details/629-ecotecture-centre-for-ecological-art-architecture");
+        page.isReady();
+        String[] revenues = extractor.getRevenuePerYear();
+        assertEquals("Total revenues",revenues[0]);
+        assertEquals("49,309",revenues[1]);
+        assertEquals("34,620",revenues[2]);
+        assertEquals("65,346",revenues[3]);
+        assertEquals(65346, Integer.parseInt(revenues[3].replaceAll(",","")));
     }
 }
