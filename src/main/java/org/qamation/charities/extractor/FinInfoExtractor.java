@@ -12,6 +12,10 @@ public class FinInfoExtractor {
     private static final String SUMMARY_ELEMENT_XPATH = FIN_INFO_ELEMENT_XPATH+"/table[2]";
     private static final String SUMMARY_YEARS_XPATH = SUMMARY_ELEMENT_XPATH+"/thead/tr/th";
     private static final String REVENUES_YEAR_XPATH = "//*[contains(text(),'Total revenue')]/../../td";
+    private static final String PROGRAM_COSTS_XPATH = "//*[contains(text(),'Program costs')]/../td";
+    private static final String ADMIN_COSTS_XPATH = "//*[contains(text(),'Administrative costs')]/../td";
+    private static final String FUNDRIZING_COSTS_XPATH = "//*[contains(text(),'Fundraising costs')]/../td";
+    private static final String OTHER_COSTS_XPATH = "//*[contains(text(),'Other costs')]";
 
     private WebDriver driver;
 
@@ -26,19 +30,28 @@ public class FinInfoExtractor {
     }
 */
     public String[] getYears() {
-        By xpath = By.xpath(SUMMARY_YEARS_XPATH);
-        List<WebElement> els = driver.findElements(xpath);
-        return getElementsContent(els);
+        return getLine(SUMMARY_YEARS_XPATH);
     }
 
     public String [] getRevenuePerYear() {
-        By xpath = By.xpath(REVENUES_YEAR_XPATH);
-        List<WebElement> els = driver.findElements(xpath);
-        return getElementsContent(els);
+        return getLine(REVENUES_YEAR_XPATH);
+
+    }
+
+    public String[] getProgramCostPerYear() {
+        return getLine(PROGRAM_COSTS_XPATH);
     }
 
 
 
+
+
+
+    private String[] getLine(String x) {
+        By xpath = By.xpath(x);
+        List<WebElement> els = driver.findElements(xpath);
+        return getElementsContent(els);
+    }
 
     private  String[] getElementsContent(List<WebElement> els) {
         if (els.size()==0) return new String[] {};
