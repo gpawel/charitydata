@@ -3,7 +3,6 @@ package org.qamation.charities.extractor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.qamation.charities.info.FinStats;
 
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class FinInfoExtractor {
 
     public FinInfoExtractor(WebDriver driver) {
         this.driver = driver;
-        years = getLine(SUMMARY_YEARS_XPATH);
+        years = extractFromPage(SUMMARY_YEARS_XPATH);
     }
 
 
@@ -36,13 +35,18 @@ public class FinInfoExtractor {
     }
 
     public String [] getRevenuePerYear() {
-        return getLine(REVENUES_YEAR_XPATH);
-
+        return extractFromPage(REVENUES_YEAR_XPATH);
     }
 
-    public String[] getCostPerYear() {
-        String costLines = get
-        return getLine(PROGRAM_COSTS_XPATH);
+    public int[] getCostPerYear() {
+        String[] costLines = extractFromPage(SUMMARY_COSTS_XPATH);
+        int[] costsPerYear = new int[getNumberOfYears()+1];
+        for (int i=0; i < getNumberOfYears(); i=i+getNumberOfYears()+1) {
+            for (int j=0; j < getNumberOfYears()+1; j++) {
+                costsPerYear[j] = costsPerYear[j]+Integer.parseInt(costLines[i+j].replaceAll(",",""));
+            }
+        }
+        return costsPerYear;
     }
 
 
@@ -50,7 +54,7 @@ public class FinInfoExtractor {
 
 
 
-    private String[] getLine(String x) {
+    private String[] extractFromPage(String x) {
         By xpath = By.xpath(x);
         List<WebElement> els = driver.findElements(xpath);
         return getElementsContent(els);
