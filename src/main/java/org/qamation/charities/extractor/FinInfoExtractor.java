@@ -16,21 +16,23 @@ public class FinInfoExtractor {
     private static final String ADMIN_COSTS_XPATH = "//*[contains(text(),'Administrative costs')]/../td";
     private static final String FUNDRIZING_COSTS_XPATH = "//*[contains(text(),'Fundraising costs')]/../td";
     private static final String OTHER_COSTS_XPATH = "//*[contains(text(),'Other costs')]";
+    private static final String SUMMARY_COSTS_XPATH = "//*/table[@class='stats_table summary']//*[contains(text(),' costs')]/../td";
 
     private WebDriver driver;
+    private String[] years;
 
     public FinInfoExtractor(WebDriver driver) {
         this.driver = driver;
+        years = getLine(SUMMARY_YEARS_XPATH);
     }
 
 
-    /*
-    public static List<FinStats> extactFinInfo(WebDriver driver) {
-        String[] years = getYears(driver);
-    }
-*/
     public String[] getYears() {
-        return getLine(SUMMARY_YEARS_XPATH);
+        return years;
+    }
+
+    public int getNumberOfYears() {
+        return years.length;
     }
 
     public String [] getRevenuePerYear() {
@@ -38,7 +40,8 @@ public class FinInfoExtractor {
 
     }
 
-    public String[] getProgramCostPerYear() {
+    public String[] getCostPerYear() {
+        String costLines = get
         return getLine(PROGRAM_COSTS_XPATH);
     }
 
