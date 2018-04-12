@@ -80,5 +80,6 @@ public class SimpleThreads {
             }
         }
         threadMessage("Finally!");
+        System.out.println(System.getProperty("os.name"));
     }
 }

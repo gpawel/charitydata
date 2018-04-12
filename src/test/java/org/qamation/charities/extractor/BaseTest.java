@@ -12,7 +12,14 @@ public class BaseTest {
     Page page;
     @Before
     public void setUp() {
-        driver = WebDriverFactory.createChromeWebDriver("C:\\TEST_ENV\\Selenium\\ChromeDriver\\chromedriver.exe");
+        String path;
+        if (System.getProperty("os.name").equalsIgnoreCase("Linux")) {
+            path = "~/workspace/Selenium/Chrome/chromedriver";
+        }
+        else {
+           path = "C:\\TEST_ENV\\Selenium\\ChromeDriver\\chromedriver.exe";
+        }
+        driver = WebDriverFactory.createChromeWebDriver(path);
         page = WebPageFactory.createGeneralPageInstance(driver);
 
     }
