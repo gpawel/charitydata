@@ -58,4 +58,15 @@ public class FinInfoExtractorTests extends BaseTest {
         assertEquals("65,346",revenues[3]);
         assertEquals(65346, Integer.parseInt(revenues[3].replaceAll(",","")));
     }
+
+    @Test
+    public void extractCharityCost() {
+        page.openPage("https://charityintelligence.ca/charity-details/393-montreal-spca");
+        page.isReady();
+        int[] cost = extractor.getCostPerYear();
+        assertEquals(3,cost.length);
+        assertEquals(cost[0],7382);
+        assertEquals(cost[1],7225);
+        assertEquals(cost[2],7428);
+    }
 }

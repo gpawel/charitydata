@@ -14,7 +14,7 @@ public class BaseTest {
     public void setUp() {
         String path;
         if (System.getProperty("os.name").equalsIgnoreCase("Linux")) {
-            path = "~/workspace/Selenium/Chrome/chromedriver";
+            path = System.getProperty("user.home")+"/workspace/Selenium/Chrome/chromedriver";
         }
         else {
            path = "C:\\TEST_ENV\\Selenium\\ChromeDriver\\chromedriver.exe";
