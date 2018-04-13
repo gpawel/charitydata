@@ -20,27 +20,38 @@ public class FinInfoExtractor extends AbstractExtractor {
     private static final String SUMMARY_COSTS_XPATH = "//*/table[@class='stats_table summary']//*[contains(text(),' costs')]/../td";
 
     private String[] years;
+    private String[] revenue;
+    private String[][] costGoups;
 
 
     public FinInfoExtractor(WebDriver driver,String url) {
         super(driver,url);
-        years = extractFromPage(SUMMARY_YEARS_XPATH);
-    }
-
-
-    public String[] getYears() {
-        return years;
+        this.years = extractFromPage(SUMMARY_YEARS_XPATH);
+        this.revenue = getRevenuePerYear();
+        this.costGoups = getCostGroups();
     }
 
     public int getNumberOfYears() {
         return years.length;
     }
 
-    public String [] getRevenuePerYear() {
+    public String[] getRevenue() {
+        return revenue;
+    }
+
+    public String[][] getCostGoups() {
+        return costGoups;
+    }
+
+    public String[] getYears() {
+        return years;
+    }
+
+    private String [] getRevenuePerYear() {
         return extractFromPage(REVENUES_YEAR_XPATH);
     }
 
-    public String[][] getCostGroups() {
+    private String[][] getCostGroups() {
         String[] source = extractFromPage(SUMMARY_COSTS_XPATH);
         int groupLength = years.length+1;
         String[][] groups = new String[source.length/groupLength][groupLength];

@@ -16,7 +16,7 @@ public class CharityLinkExtractorTests extends BaseTest {
     @Test
     public void getCharitiesLinksTest() {
         CharityLinkExtractor extractor = new CharityLinkExtractor(driver,"https://charityintelligence.ca/research/a-z-charity-listing");
-        List<String> links = extractor.getCharityLinks(driver);
+        List<String> links = extractor.getLinks();
         for (String s : links) {
             System.out.println(s);
         }

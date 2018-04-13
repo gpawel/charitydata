@@ -34,7 +34,7 @@ public class FinInfoExtractorTests extends BaseTest {
     @Test
     public void extractRevenueTest1() {
         extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/154-acclaim-health");
-        String[] revenues = extractor.getRevenuePerYear();
+        String[] revenues = extractor.getRevenue();
         assertEquals("Total revenues",revenues[0]);
         assertEquals("18,854",revenues[1]);
         assertEquals("18,704",revenues[2]);
@@ -45,7 +45,7 @@ public class FinInfoExtractorTests extends BaseTest {
     @Test
     public void extactRevenueTest2() {
         extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/629-ecotecture-centre-for-ecological-art-architecture");
-        String[] revenues = extractor.getRevenuePerYear();
+        String[] revenues = extractor.getRevenue();
         assertEquals("Total revenues",revenues[0]);
         assertEquals("49,309",revenues[1]);
         assertEquals("34,620",revenues[2]);
@@ -56,7 +56,7 @@ public class FinInfoExtractorTests extends BaseTest {
     @Test
     public void extractCharityCost() {
         extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/393-montreal-spca");
-        String[][] groups = extractor.getCostGroups();
+        String[][] groups = extractor.getCostGoups();
         for (int i=0; i<groups.length; i++) {
             for (int j=0; j<groups[i].length; j++) {
                 System.out.print(groups[i][j]+"\t");
