@@ -4,6 +4,7 @@ public class FinStats {
     private int year;
     private int totalIncome;
     private int totalExpences;
+    private int totalProgramCost;
 
     public FinStats (String year, String inc, String exp) {
         this.year = Integer.parseInt(year);
