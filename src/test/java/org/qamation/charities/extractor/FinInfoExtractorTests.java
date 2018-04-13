@@ -3,6 +3,7 @@ package org.qamation.charities.extractor;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.qamation.charities.BaseTest;
 
 public class FinInfoExtractorTests extends BaseTest {
     // https://charityintelligence.ca/charity-details/772-blue-sea-philanthropy

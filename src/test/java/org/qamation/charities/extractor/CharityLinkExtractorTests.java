@@ -1,12 +1,7 @@
 package org.qamation.charities.extractor;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.qamation.web.page.Page;
-import org.qamation.web.page.WebPageFactory;
-import org.qamation.webdriver.utils.WebDriverFactory;
+import org.qamation.charities.BaseTest;
 
 import java.util.List;
 

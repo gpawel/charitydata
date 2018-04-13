@@ -1,4 +1,4 @@
-package org.qamation.charities.extractor;
+package org.qamation.charities;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,7 +8,7 @@ import org.qamation.web.page.WebPageFactory;
 import org.qamation.webdriver.utils.WebDriverFactory;
 
 public class BaseTest {
-    WebDriver driver;
+    protected WebDriver driver;
 
     @Before
     public void setUp() {

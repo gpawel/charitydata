@@ -37,7 +37,6 @@ public class FinStatParser {
             list.add(fs);
         }
         return list;
-
     }
 
     private int[] getExpenses(String[][] costGoups) {
