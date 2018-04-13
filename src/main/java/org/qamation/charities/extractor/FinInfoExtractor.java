@@ -40,17 +40,6 @@ public class FinInfoExtractor extends AbstractExtractor {
         return extractFromPage(REVENUES_YEAR_XPATH);
     }
 
-    public String[] getCostPerYear() {
-        String[] costLines = extractFromPage(SUMMARY_COSTS_XPATH);
-        int[] costsPerYear = new int[getNumberOfYears()];
-        int groupLength = getNumberOfYears()+1;
-        String [][] costGroups = getCostGroups();
-
-
-        return null;
-    }
-
-
     public String[][] getCostGroups() {
         String[] source = extractFromPage(SUMMARY_COSTS_XPATH);
         int groupLength = years.length+1;
