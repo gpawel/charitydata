@@ -8,9 +8,9 @@ public class AbstractExtractor {
     protected WebDriver driver;
     protected Page page;
 
-    public AbstractExtractor(WebDriver d, String url) {
+    public AbstractExtractor(WebDriver driver, String url) {
         this.driver = driver;
-        Page page = WebPageFactory.createGeneralPageInstance(driver);
+        Page page = WebPageFactory.createGeneralPageInstance(this.driver);
         page.openPage(url);
         page.isReady();
     }
