@@ -3,10 +3,12 @@ package org.qamation.charities.extractor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.qamation.web.page.Page;
+import org.qamation.web.page.WebPageFactory;
 
 import java.util.List;
 
-public class FinInfoExtractor {
+public class FinInfoExtractor extends AbstractExtractor {
     private static final String FIN_INFO_ELEMENT_XPATH = "//div[@id='stats']";
     private static final String SUMMARY_ELEMENT_XPATH = FIN_INFO_ELEMENT_XPATH+"/table[2]";
     private static final String SUMMARY_YEARS_XPATH = SUMMARY_ELEMENT_XPATH+"/thead/tr/th";
@@ -17,11 +19,11 @@ public class FinInfoExtractor {
     private static final String OTHER_COSTS_XPATH = "//*[contains(text(),'Other costs')]";
     private static final String SUMMARY_COSTS_XPATH = "//*/table[@class='stats_table summary']//*[contains(text(),' costs')]/../td";
 
-    private WebDriver driver;
     private String[] years;
 
-    public FinInfoExtractor(WebDriver driver) {
-        this.driver = driver;
+
+    public FinInfoExtractor(WebDriver driver,String url) {
+        super(driver,url);
         years = extractFromPage(SUMMARY_YEARS_XPATH);
     }
 
@@ -38,19 +40,30 @@ public class FinInfoExtractor {
         return extractFromPage(REVENUES_YEAR_XPATH);
     }
 
-    public int[] getCostPerYear() {
+    public String[] getCostPerYear() {
         String[] costLines = extractFromPage(SUMMARY_COSTS_XPATH);
-        int[] costsPerYear = new int[getNumberOfYears()+1];
-        for (int i=0; i < getNumberOfYears(); i=i+getNumberOfYears()+1) {
-            for (int j=0; j < getNumberOfYears()+1; j++) {
-                costsPerYear[j] = costsPerYear[j]+Integer.parseInt(costLines[i+j].replaceAll(",",""));
-            }
-        }
-        return costsPerYear;
+        int[] costsPerYear = new int[getNumberOfYears()];
+        int groupLength = getNumberOfYears()+1;
+        String [][] costGroups = getCostGroups();
+
+
+        return null;
     }
 
 
-
+    public String[][] getCostGroups() {
+        String[] source = extractFromPage(SUMMARY_COSTS_XPATH);
+        int groupLength = years.length+1;
+        String[][] groups = new String[source.length/groupLength][groupLength];
+        int groupIndex = 0;
+        for (int i=0; i < source.length; i=i+groupLength) {
+            for (int j = 0; j < groupLength; j++) {
+                groups[groupIndex][j] = source[i + j];
+            }
+            groupIndex++;
+        }
+        return groups;
+    }
 
 
 

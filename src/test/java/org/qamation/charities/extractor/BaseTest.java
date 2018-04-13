@@ -9,7 +9,7 @@ import org.qamation.webdriver.utils.WebDriverFactory;
 
 public class BaseTest {
     WebDriver driver;
-    Page page;
+
     @Before
     public void setUp() {
         String path;
@@ -20,7 +20,6 @@ public class BaseTest {
            path = "C:\\TEST_ENV\\Selenium\\ChromeDriver\\chromedriver.exe";
         }
         driver = WebDriverFactory.createChromeWebDriver(path);
-        page = WebPageFactory.createGeneralPageInstance(driver);
 
     }
 

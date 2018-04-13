@@ -11,13 +11,11 @@ public class FinInfoExtractorTests extends BaseTest {
     @Before
     public void setUp() {
         super.setUp();
-        extractor = new FinInfoExtractor(driver);
     }
 
     @Test
     public void extractYearsTest1() {
-        page.openPage("https://charityintelligence.ca/charity-details/154-acclaim-health");
-        page.isReady();
+        extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/154-acclaim-health");
         String[] data = extractor.getYears();
         assertEquals("2016",data[0]);
         assertEquals("2015",data[1]);
@@ -26,8 +24,7 @@ public class FinInfoExtractorTests extends BaseTest {
 
     @Test
     public void extractYearsTest2() {
-        page.openPage("https://charityintelligence.ca/charity-details/772-blue-sea-philanthropy");
-        page.isReady();
+        extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/772-blue-sea-philanthropy");
         String[] data = extractor.getYears();
         assertEquals("2015",data[0]);
         assertEquals("2014",data[1]);
@@ -36,8 +33,7 @@ public class FinInfoExtractorTests extends BaseTest {
 
     @Test
     public void extractRevenueTest1() {
-        page.openPage("https://charityintelligence.ca/charity-details/154-acclaim-health");
-        page.isReady();
+        extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/154-acclaim-health");
         String[] revenues = extractor.getRevenuePerYear();
         assertEquals("Total revenues",revenues[0]);
         assertEquals("18,854",revenues[1]);
@@ -48,9 +44,7 @@ public class FinInfoExtractorTests extends BaseTest {
 
     @Test
     public void extactRevenueTest2() {
-        //https://charityintelligence.ca/charity-details/629-ecotecture-centre-for-ecological-art-architecture
-        page.openPage("https://charityintelligence.ca/charity-details/629-ecotecture-centre-for-ecological-art-architecture");
-        page.isReady();
+        extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/629-ecotecture-centre-for-ecological-art-architecture");
         String[] revenues = extractor.getRevenuePerYear();
         assertEquals("Total revenues",revenues[0]);
         assertEquals("49,309",revenues[1]);
@@ -61,12 +55,17 @@ public class FinInfoExtractorTests extends BaseTest {
 
     @Test
     public void extractCharityCost() {
-        page.openPage("https://charityintelligence.ca/charity-details/393-montreal-spca");
-        page.isReady();
-        int[] cost = extractor.getCostPerYear();
-        assertEquals(3,cost.length);
-        assertEquals(cost[0],7382);
-        assertEquals(cost[1],7225);
-        assertEquals(cost[2],7428);
+        extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/393-montreal-spca");
+        String[][] groups = extractor.getCostGroups();
+        for (int i=0; i<groups.length; i++) {
+            for (int j=0; j<groups[i].length; j++) {
+                System.out.print(groups[i][j]+"\t");
+            }
+            System.out.print("\n");
+        }
+        assertEquals("Program costs",groups[0][0]);
+        assertEquals("210",groups[1][1]);
+        assertEquals("2,192",groups[2][2]);
+        assertEquals("193",groups[3][3]);
     }
 }
