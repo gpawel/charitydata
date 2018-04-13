@@ -6,10 +6,11 @@ public class FinStats {
     private int totalExpences;
     private int totalProgramCost;
 
-    public FinStats (String year, String inc, String exp) {
-        this.year = Integer.parseInt(year);
-        this.totalIncome = Integer.parseInt(inc);
-        this.totalExpences = Integer.parseInt(exp);
+    public FinStats (int year, int inc, int prog, int exp) {
+        this.year = year;
+        this.totalIncome = inc;
+        this.totalExpences = exp;
+        this.totalProgramCost = prog;
     }
 
     public int getYear() {
