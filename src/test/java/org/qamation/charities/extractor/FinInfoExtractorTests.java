@@ -69,4 +69,10 @@ public class FinInfoExtractorTests extends BaseTest {
         assertEquals("2,192",groups[2][2]);
         assertEquals("193",groups[3][3]);
     }
+
+    @Test
+    public void extractFondName1() {
+        extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/200-atlantic-council-of-canada-nato-association-of-canada");
+        assertEquals("ATLANTIC COUNCIL OF CANADA / NATO ASSOCIATION OF CANADA", extractor.getFondName());
+    }
 }

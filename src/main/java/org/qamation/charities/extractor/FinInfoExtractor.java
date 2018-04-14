@@ -3,13 +3,12 @@ package org.qamation.charities.extractor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.qamation.web.page.Page;
-import org.qamation.web.page.WebPageFactory;
 
 import java.util.List;
 
 public class FinInfoExtractor extends AbstractExtractor {
     private static final String FIN_INFO_ELEMENT_XPATH = "//div[@id='stats']";
+    private static final String FOND_NAME_XPATH = "//div[@id='name']/h1";
     private static final String SUMMARY_ELEMENT_XPATH = FIN_INFO_ELEMENT_XPATH+"/table[2]";
     private static final String SUMMARY_YEARS_XPATH = SUMMARY_ELEMENT_XPATH+"/thead/tr/th";
     private static final String REVENUES_YEAR_XPATH = "//*[contains(text(),'Total revenue')]/../../td";
@@ -22,6 +21,7 @@ public class FinInfoExtractor extends AbstractExtractor {
     private String[] years;
     private String[] revenue;
     private String[][] costGoups;
+    private String fondName;
 
 
     public FinInfoExtractor(WebDriver driver,String url) {
@@ -29,10 +29,15 @@ public class FinInfoExtractor extends AbstractExtractor {
         this.years = extractFromPage(SUMMARY_YEARS_XPATH);
         this.revenue = getRevenuePerYear();
         this.costGoups = getCostGroups();
+        this.fondName = getFond();
     }
 
     public int getNumberOfYears() {
         return years.length;
+    }
+
+    public String getFondName() {
+        return this.fondName;
     }
 
     public String[] getRevenue() {
@@ -66,6 +71,11 @@ public class FinInfoExtractor extends AbstractExtractor {
     }
 
 
+    private String getFond() {
+        String[] list = extractFromPage(FOND_NAME_XPATH);
+        return list[0];
+
+    }
 
     private String[] extractFromPage(String x) {
         By xpath = By.xpath(x);

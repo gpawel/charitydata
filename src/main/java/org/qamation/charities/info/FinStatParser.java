@@ -33,7 +33,7 @@ public class FinStatParser {
         int[] expences = getExpenses(extractor.getCostGoups());
         for (int yearIndex=0; yearIndex<numberOfYears; yearIndex++) {
             int year = Integer.parseInt(extractor.getYears()[yearIndex]);
-            FinStats fs = new FinStats(year,revenue[yearIndex],programCost[yearIndex],expences[yearIndex]);
+            FinStats fs = new FinStats(extractor.getFondName(),year,revenue[yearIndex],programCost[yearIndex],expences[yearIndex]);
             list.add(fs);
         }
         return list;
