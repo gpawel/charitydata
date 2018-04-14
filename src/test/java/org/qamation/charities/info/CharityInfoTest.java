@@ -8,22 +8,21 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import org.slf4j.Logger;
 
-import static org.junit.Assert.*;
-
-public class FinStatParserTest extends BaseTest {
+public class CharityInfoTest extends BaseTest {
     private FinInfoExtractor extractor;
-    private FinStatParser parser;
-    Logger log = LoggerFactory.getLogger(FinStatParserTest.class);
+    private CharityInfo parser;
+    Logger log = LoggerFactory.getLogger(CharityInfoTest.class);
 
     @Test
     public void getFinDataTest() {
         log.info("Test Started");
         extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/393-montreal-spca");
-        parser = new FinStatParser(extractor);
+        parser = new CharityInfo(extractor);
         List<FinStats> statsList = parser.getFinStats();
         for (FinStats fs: statsList) {
             System.out.println(fs.toString());
         }
+
         log.info("Test Finished");
     }
 }

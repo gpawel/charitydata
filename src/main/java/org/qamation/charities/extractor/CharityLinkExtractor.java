@@ -17,7 +17,7 @@ public class CharityLinkExtractor extends AbstractExtractor{
     private List<String> links;
 
     public CharityLinkExtractor(WebDriver driver, String url) {
-        super(driver,url);
+        super(driver, url);
         this.links = getCharityLinks();
     }
 

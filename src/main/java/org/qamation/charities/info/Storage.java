@@ -1,26 +1,20 @@
 package org.qamation.charities.info;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Storage {
-    private static Storage storage = null;
+    private static ConcurrentHashMap<String,CharityInfo> storage = new ConcurrentHashMap<>();
 
-    private HashMap<String,CharityInfo> data;
-
-    public static Storage getStorage() {
-        if (storage == null) storage = new Storage();
-        return storage;
+    public static void addCharity(CharityInfo charity) {
+        storage.put(charity.getFundName(), charity);
     }
 
-    private Storage() {
-        data = new HashMap<>();
+    public Enumeration<CharityInfo> getAllCharities() {
+        return storage.elements();
     }
 
-    public CharityInfo getCharityByName(String name) {
-        if (!data.containsKey(name)) {
-            data.put(name,new CharityInfo(name));
-        }
-        return data.get(name);
-    }
 
 }

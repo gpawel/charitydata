@@ -3,6 +3,8 @@ package org.qamation.charities.extractor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -18,26 +20,29 @@ public class FinInfoExtractor extends AbstractExtractor {
     private static final String OTHER_COSTS_XPATH = "//*[contains(text(),'Other costs')]";
     private static final String SUMMARY_COSTS_XPATH = "//*/table[@class='stats_table summary']//*[contains(text(),' costs')]/../td";
 
+    private Logger log = LoggerFactory.getLogger(FinInfoExtractor.class);
+
     private String[] years;
     private String[] revenue;
     private String[][] costGoups;
-    private String fondName;
+    private String fundName;
 
 
     public FinInfoExtractor(WebDriver driver,String url) {
         super(driver,url);
+        log.info("\nParsing: "+url);
+        this.fundName = getFund();
         this.years = extractFromPage(SUMMARY_YEARS_XPATH);
         this.revenue = getRevenuePerYear();
         this.costGoups = getCostGroups();
-        this.fondName = getFond();
     }
 
     public int getNumberOfYears() {
         return years.length;
     }
 
-    public String getFondName() {
-        return this.fondName;
+    public String getFundName() {
+        return this.fundName;
     }
 
     public String[] getRevenue() {
@@ -71,7 +76,7 @@ public class FinInfoExtractor extends AbstractExtractor {
     }
 
 
-    private String getFond() {
+    private String getFund() {
         String[] list = extractFromPage(FOND_NAME_XPATH);
         return list[0];
 
