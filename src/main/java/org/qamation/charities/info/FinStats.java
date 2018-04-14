@@ -24,4 +24,9 @@ public class FinStats {
     public int getTotalExpences() {
         return totalExpences;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(year)+"\t"+String.valueOf(totalIncome)+"\t"+String.valueOf(totalProgramCost)+"\t"+String.valueOf(totalExpences);
+    }
 }

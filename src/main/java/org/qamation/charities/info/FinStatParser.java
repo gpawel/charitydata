@@ -44,7 +44,7 @@ public class FinStatParser {
     }
 
     private int[] getProgramCost(String[][] costGoups) {
-        return aggregateYearAmount(costGoups,isNotProgramCost);
+        return aggregateYearAmount(costGoups,isProgramCost);
     }
 
     private int[] aggregateYearAmount(String[][] costGroups, Predicate<String[]> filter) {
