@@ -8,22 +8,28 @@ import org.qamation.charities.info.Storage;
 import org.qamation.webdriver.utils.WebDriverFactory;
 
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Worker implements Runnable {
 
     private WebDriver driver;
-    private String url;
+    private ConcurrentLinkedQueue<String> queue;
 
 
-    public Worker(String url) {
+    public Worker(WebDriver driver, ConcurrentLinkedQueue<String> queue ) {
         this.driver = WebDriverFactory.createChromeWebDriver(Extract.getWebDriverPath());
-        this.url = url;
+        this.queue = queue;
     }
 
 
 
     @Override
     public void run() {
+        String url = queue.poll();
+        if (url == null) {
+            driver.quit();
+            return;
+        }
         FinInfoExtractor extractor = new FinInfoExtractor(driver,url);
         CharityInfo charity = new CharityInfo(extractor);
         Storage.addCharity(charity);

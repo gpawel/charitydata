@@ -95,5 +95,15 @@ public class CharityInfo {
         return data;
     }
 
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        for (FinStats stats: finList) {
+            buffer.append(stats.toString());
+            buffer.append("\n");
+        }
+        return buffer.toString().trim();
+    }
+
 
 }
