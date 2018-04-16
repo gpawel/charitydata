@@ -11,16 +11,19 @@ public class AbstractExtractor {
 
     public AbstractExtractor(WebDriver driver, String url) {
         this.driver = driver;
-        Page page = WebPageFactory.createGeneralPageInstance(this.driver);
+        page = WebPageFactory.createGeneralPageInstance(this.driver);
         try {
-            page.openPage(url);
-            page.isReady();
+            openUrl(url);
         }
         catch(TimeoutException ex) {
-            page.openPage(url);
-            page.isReady();
+            openUrl(url);
         }
 
+    }
+
+    private void openUrl(String url) {
+        page.openPage(url);
+        page.isReady();
     }
 
 }
