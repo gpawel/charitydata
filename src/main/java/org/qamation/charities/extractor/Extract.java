@@ -23,20 +23,28 @@ public class Extract {
         CharityLinkExtractor extractor = new CharityLinkExtractor(driver,HOST);
         driver.close();
         ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue(extractor.getLinks());
+/*
+        ConcurrentLinkedQueue<String> queue = new ConcurrentLinkedQueue();
+        queue.add("https://charityintelligence.ca/charity-details/125-416-community-support-for-women");
+        queue.add("https://charityintelligence.ca/charity-details/692-alberta-adolescent-recovery-centre");
+        queue.add("https://charityintelligence.ca/charity-details/539-ywca-toronto");
+        queue.add("https://charityintelligence.ca/charity-details/569-canadian-olympic-foundation");
+*/
         ExecutorService executorService = Executors.newFixedThreadPool(N);
         for (int i=0; i<N; i++) {
-            driver = WebDriverFactory.createChromeWebDriver(getWebDriverPath());
-            Worker w = new Worker(driver, queue);
+            Worker w = new Worker(queue);
             executorService.execute(w);
-            Storage.toFile("charities_info.tsv");
         }
         try {
             executorService.shutdown();
-            executorService.awaitTermination(60, TimeUnit.MINUTES);
+            executorService.awaitTermination(10, TimeUnit.MINUTES);
+            Storage.toFile("charities_info.tsv");
 
         }
         catch(InterruptedException e) {
-            executorService.shutdown();
+            log.error(e.getMessage());
+            e.printStackTrace();
+            executorService.shutdownNow();
         }
 
 

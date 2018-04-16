@@ -75,4 +75,17 @@ public class FinInfoExtractorTests extends BaseTest {
         extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/200-atlantic-council-of-canada-nato-association-of-canada");
         assertEquals("ATLANTIC COUNCIL OF CANADA / NATO ASSOCIATION OF CANADA", extractor.getFundName());
     }
+    @Test
+    public void extractGrandsCost1() {
+        extractor = new FinInfoExtractor(driver, "https://charityintelligence.ca/charity-details/314-cape-breton-regional-hospital-foundation");
+        //extractor = new FinInfoExtractor(driver,"https://charityintelligence.ca/charity-details/393-montreal-spca");
+        String[][] groups = extractor.getCostGoups();
+        for (int i=0; i<groups.length; i++) {
+            for (int j=0; j<groups[i].length; j++) {
+                System.out.print(groups[i][j]+"\t");
+            }
+            System.out.print("\n");
+        }
+
+    }
 }

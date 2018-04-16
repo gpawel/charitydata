@@ -32,9 +32,10 @@ public class Storage {
         if (charities.length == 0) return;
         try {
             PrintWriter writer = new PrintWriter(fileName);
-            writer.print("Charity Name\tYear\tTotal Income\tTotal Spend on Programs\tTotal Cost");
+            writer.print("Charity Name\tYear\tTotal Income\tTotal Spend on Programs\tTotal Cost\n");
             for (CharityInfo info : charities) {
                 writer.print(info.toString());
+                writer.print("\n");
                 writer.flush();
             }
             writer.close();

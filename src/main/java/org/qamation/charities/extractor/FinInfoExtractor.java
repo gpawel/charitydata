@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FinInfoExtractor extends AbstractExtractor {
@@ -19,6 +20,7 @@ public class FinInfoExtractor extends AbstractExtractor {
     private static final String FUNDRIZING_COSTS_XPATH = "//*[contains(text(),'Fundraising costs')]/../td";
     private static final String OTHER_COSTS_XPATH = "//*[contains(text(),'Other costs')]";
     private static final String SUMMARY_COSTS_XPATH = "//*/table[@class='stats_table summary']//*[contains(text(),' costs')]/../td";
+    private static final String GRANTS_XPATH = "//*/table[@class='stats_table summary']//*[contains(text(),'Grant')]/../td";
 
     private Logger log = LoggerFactory.getLogger(FinInfoExtractor.class);
 
@@ -34,7 +36,7 @@ public class FinInfoExtractor extends AbstractExtractor {
         this.fundName = getFund();
         this.years = extractFromPage(SUMMARY_YEARS_XPATH);
         this.revenue = getRevenuePerYear();
-        this.costGoups = getCostGroups();
+        this.costGoups = getFinSummaryGroups();
     }
 
     public int getNumberOfYears() {
@@ -61,20 +63,35 @@ public class FinInfoExtractor extends AbstractExtractor {
         return extractFromPage(REVENUES_YEAR_XPATH);
     }
 
-    private String[][] getCostGroups() {
-        String[] source = extractFromPage(SUMMARY_COSTS_XPATH);
+    private String[][] getFinSummaryGroups() {
+        String[] costs = extractFromPage(SUMMARY_COSTS_XPATH);
+        String[] grants = extractFromPage(GRANTS_XPATH);
         int groupLength = years.length+1;
-        String[][] groups = new String[source.length/groupLength][groupLength];
-        int groupIndex = 0;
-        for (int i=0; i < source.length; i=i+groupLength) {
-            for (int j = 0; j < groupLength; j++) {
-                groups[groupIndex][j] = source[i + j];
-            }
-            groupIndex++;
-        }
-        return groups;
+        ArrayList<ArrayList<String>> result = parseGroup(costs,groupLength);
+        result.addAll(parseGroup(grants,groupLength));
+        return convertListToArray(result);
     }
 
+    private ArrayList<ArrayList<String>> parseGroup(String[] source, int groupLength) {
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        for (int i=0; i < source.length; i=i+groupLength) {
+            ArrayList<String> group = new ArrayList<>();
+            for (int j = 0; j <groupLength; j++) {
+                group.add(source[i+j]);
+            }
+            result.add(group);
+        }
+        return result;
+    }
+
+    private String[][] convertListToArray(ArrayList<ArrayList<String>> source) {
+        String[][] array = new String[source.size()][];
+        for (int i = 0; i < source.size(); i++) {
+            ArrayList<String> row = source.get(i);
+            array[i] = row.toArray(new String[row.size()]);
+        }
+        return array;
+    }
 
     private String getFund() {
         String[] list = extractFromPage(FOND_NAME_XPATH);

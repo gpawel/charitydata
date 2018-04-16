@@ -6,17 +6,19 @@ import org.qamation.charities.extractor.FinInfoExtractor;
 import org.qamation.charities.info.CharityInfo;
 import org.qamation.charities.info.Storage;
 import org.qamation.webdriver.utils.WebDriverFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Worker implements Runnable {
-
+    private static Logger log = LoggerFactory.getLogger(Worker.class);
     private WebDriver driver;
     private ConcurrentLinkedQueue<String> queue;
 
 
-    public Worker(WebDriver driver, ConcurrentLinkedQueue<String> queue ) {
+    public Worker(ConcurrentLinkedQueue<String> queue ) {
         this.driver = WebDriverFactory.createChromeWebDriver(Extract.getWebDriverPath());
         this.queue = queue;
     }
@@ -25,13 +27,23 @@ public class Worker implements Runnable {
 
     @Override
     public void run() {
-        String url = queue.poll();
-        if (url == null) {
-            driver.quit();
-            return;
+        while(!queue.isEmpty()) {
+            String url="";
+            try {
+                url = queue.poll();
+                FinInfoExtractor extractor = new FinInfoExtractor(driver, url);
+                CharityInfo charity = new CharityInfo(extractor);
+                Storage.addCharity(charity);
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+                log.error("Problem parsing info for <"+url+">");
+                run();
+            }
         }
-        FinInfoExtractor extractor = new FinInfoExtractor(driver,url);
-        CharityInfo charity = new CharityInfo(extractor);
-        Storage.addCharity(charity);
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
     }
 }

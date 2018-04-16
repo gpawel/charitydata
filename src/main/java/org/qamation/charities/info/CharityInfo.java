@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 
 public class CharityInfo {
 
-    private static Predicate<String[]> isProgramCost = p -> p[0].startsWith("Program");
+    private static Predicate<String[]> isProgramCost = p -> p[0].startsWith("Program") || p[0].startsWith("Grant");
     private static Predicate<String[]> isNotProgramCost = p -> !isProgramCost.test(p);
 
     private Logger log = LoggerFactory.getLogger(CharityInfo.class);
